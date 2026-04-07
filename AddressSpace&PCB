@@ -1,0 +1,27 @@
+Address Space and Process Control Block(PCB)
+
+𝐀𝐝𝐝𝐫𝐞𝐬𝐬 𝐒𝐩𝐚𝐜𝐞: Every process running on our systems has memory allocated for its address space. Which includes:
+|| 𝘚𝘵𝘢𝘤𝘬 → 𝘎𝘢𝘱 → 𝘏𝘦𝘢𝘱 → 𝘋𝘢𝘵𝘢 → 𝘛𝘦𝘹𝘵||
+• Stack: Contains function calls, return addresses, local variables etc.
+• Gap: That's just the empty space kept for the dynamic memory to grow.
+• Heap: Used for dynamic memory allocation like malloc(), calloc().
+• Data: For const, global and static variables.
+• Text: The program code or program instructions. (Usually read-only)
+
+-These address spaces are separate for each process and they cannot access each others. OS manages the whole thing, if something wrong happens OS throws Segmentation Fault.
+-Address space is virtual. Which is mapped to physical memory by OS.
+
+𝐏𝐂𝐁: In simple words, a Process Control Block is a data structure used by OS to manage processes. It’s like an ID Card for processes.
+Which includes:
+• Process ID (PID): Unique id for the process.
+• Process State: New, Ready, Running, Waiting, Terminated these are the states.
+• CPU Registers: Program Counter(PC) and other registers.
+• Scheduling Information: Priority and queue position.
+• Memory Information: Pointers to address space and memory limits.
+• I/O Status Information: Open files, devices used.
+
+-PCB is stored inside the Kernel Space inside the process table.
+-OS uses PCB to manage processes, perform context switching and track process execution
+Simple analogy is PCB contains everything the OS needs to identify and manage a process.
+
+The next post will be on Context switching in OS.
