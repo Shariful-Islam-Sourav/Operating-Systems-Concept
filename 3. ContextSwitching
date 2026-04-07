@@ -1,0 +1,17 @@
+Context Switching or Multitasking as a human
+
+Ever catch yourself trying to juggle writing code, checking messages and reading documentation all at once? We call it multitasking but actually our brains just like CPUs doing "context switching." 🧠💻
+
+In Operating Systems, a single CPU core can technically only execute one process at a time. To give the illusion that all our apps are running simultaneously, the OS rapidly pauses one process and starts another. But this jump isn't free.
+
+Before the CPU can switch tasks, it has to perform a Context Switch. 
+Here is how:
+🔹 The Pause: The currently running process is halted.
+🔹 The Save: The OS takes a "snapshot" of the process's state (CPU registers, program counter, memory limits) and saves it into a data structure called the Process Control Block (PCB). The PCB is like a highly detailed bookmark.
+🔹 The Load: The OS then grabs the PCB of the next process in line, reloads its saved state into the hardware and execution resumes exactly where it left off.
+
+𝐎𝐯𝐞𝐫𝐡𝐞𝐚𝐝
+Context switching is pure overhead. While the OS is busy saving and loading PCBs, absolutely no user work is getting done. OS designers put massive amounts of effort optimizing this because every microsecond wasted on a switch is a microsecond lost from actual execution.
+
+Next time you lose 15 minutes of focus because you switched tabs to scroll linkedin just remember, we humans have a pretty expensive context switch overhead too! 😅
+
