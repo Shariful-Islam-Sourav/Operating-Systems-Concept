@@ -1,0 +1,25 @@
+The Connection Between User Mode and OS Kernel
+
+The relation between the user mode and the OS kernel is a heavily guarded process. User mode is basically where the user program runs and does the basic things with limited privileges and kernel mode is unrestricted access to the whole system and hardware. By default, user programs can’t enter kernel mode to ensure the safety of the system. 
+
+𝗦𝗬𝗦𝗧𝗘𝗠 𝗖𝗔𝗟𝗟 - 𝗧𝗛𝗘 𝗕𝗥𝗜𝗗𝗚𝗘
+
+As user programs are not directly given access to the Kernel. There is a bridge that is called sytem call where the OS is the guard who decides who gets to enter and where to go inside the kernel. System call is just an abstract concept, behind the scene this is just a instruction called “Trap” (syscall).
+
+𝗧𝗥𝗔𝗣 𝗟𝗜𝗙𝗘 𝗖𝗬𝗖𝗟𝗘:
+
+1. 𝗧𝗛𝗘 𝗥𝗘𝗤𝗨𝗘𝗦𝗧: If a program wants to do something it does not have the privilege. It calls a standard library function to make this request.
+2. 𝗧𝗛𝗘 𝗧𝗥𝗔𝗣: Inside the library function, there is a machine instruction called trap or syscall. Which is executed.
+3. 𝗦𝗔𝗩𝗜𝗡𝗚 𝗦𝗧𝗔𝗧𝗘: When trap is executed, the CPU pauses the program and takes a snapshot of the current state by storing the Program Counter(PC), CPU register, status flag onto a secured kernel stack.
+4. 𝗣𝗥𝗜𝗩𝗜𝗟𝗘𝗚𝗘 𝗦𝗪𝗜𝗧𝗖𝗛: Meanwhile, the hardware switches a bit to increase the privilege level of CPU from user mode to kernel mode.
+5. 𝗧𝗥𝗔𝗣 𝗧𝗔𝗕𝗟𝗘: Then the OS decides the entry point, memory address by seeing the predefined manual called the Trap Table or the Interrupt Table.
+6. 𝗧𝗛𝗘 𝗘𝗫𝗘𝗖𝗨𝗧𝗜𝗢𝗡: Then the CPU jumps to the specific entry point in the kernel mode and executes the required task.
+7. 𝗥𝗘𝗧𝗨𝗥𝗡-𝗙𝗥𝗢𝗠-𝗧𝗥𝗔𝗣: After the task is completed the control must be given back again. Then another instruction called “Return-from-trap” is executed.
+8. 𝗥𝗘𝗦𝗧𝗢𝗥𝗘 𝗦𝗧𝗔𝗧𝗘 𝗔𝗡𝗗 𝗣𝗥𝗜𝗩𝗜𝗟𝗘𝗚𝗘: The hardware takes control again. It takes the snapshot from kernel stack and restores the state in user program and flips the mode bit again and drops the privilege level to user mode.
+9. 𝗨𝗦𝗘𝗥 𝗣𝗥𝗢𝗚𝗥𝗔𝗠 𝗥𝗘𝗦𝗨𝗠𝗘: User program is back where it was before the trap. Moreover, it can’t even tell what happened in between. The user program runs normally as if nothing happened.
+
+𝗔𝗡 𝗘𝗫𝗔𝗠𝗣𝗟𝗘:
+
+Printing something like “printf in C”:
+
+ Our program cannot directly command the monitor to display the pixels showing “Hello”. When we call printf("Hello"); the C library triggers a trap called write(). The OS comes in, it communicates with display drivers and puts “Hello” on the screen and returns control to code.
